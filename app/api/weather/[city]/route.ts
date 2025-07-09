@@ -1,10 +1,12 @@
 import { type NextRequest, NextResponse } from "next/server"
 import { getForecastWeather } from "@/lib/weather-api"
 
-export async function GET(request: NextRequest, context: { params: { city: string } }) {
+export async function GET(
+  request: NextRequest,
+  context: { params: { city: string } }
+) {
   try {
-    const { params } = await context
-    const city = decodeURIComponent(params.city)
+    const city = decodeURIComponent(context.params.city)
     const weatherData = await getForecastWeather(city, 5)
 
     return NextResponse.json(weatherData)
