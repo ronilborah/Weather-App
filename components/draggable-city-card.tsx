@@ -46,7 +46,7 @@ export const DraggableCityCard = ({ city }: { city: City }) => {
   const handleRemove = (e: React.MouseEvent) => {
     e.preventDefault()
     e.stopPropagation()
-    removeCity(city.name)
+    removeCity(city.id)
   }
 
   // Create URL-safe city name
@@ -59,9 +59,8 @@ export const DraggableCityCard = ({ city }: { city: City }) => {
       className={`relative transition-all duration-200 ${isDragging ? "z-50 rotate-3 scale-105" : "z-10"}`}
     >
       <div
-        className={`relative bg-white/5 backdrop-blur-md border border-white/10 rounded-2xl p-6 hover:bg-white/10 transition-all duration-300 hover:scale-105 hover:shadow-2xl group ${
-          isDragging ? "shadow-2xl bg-white/20 border-blue-400/50" : ""
-        }`}
+        className={`relative bg-white/5 backdrop-blur-md border border-white/10 rounded-2xl p-6 hover:bg-white/10 transition-all duration-300 hover:scale-105 hover:shadow-2xl group ${isDragging ? "shadow-2xl bg-white/20 border-blue-400/50" : ""
+          }`}
       >
         {/* Drag handle */}
         <div
@@ -75,9 +74,9 @@ export const DraggableCityCard = ({ city }: { city: City }) => {
         {/* Remove button */}
         <button
           onClick={handleRemove}
-          className="absolute top-2 right-2 opacity-0 group-hover:opacity-100 transition-opacity duration-200 bg-red-500 hover:bg-red-600 text-white rounded-full p-1 z-20"
+          className="absolute top-2 right-2 opacity-0 group-hover:opacity-100 transition-opacity duration-200 bg-transparent hover:bg-red-500/10 text-gray-300/70 hover:text-red-500/80 rounded-full p-1 z-20"
         >
-          <X size={16} />
+          <X size={20} strokeWidth={2.2} className="" />
         </button>
 
         {/* Card content - wrapped in Link but with pointer-events handling */}
