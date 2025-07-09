@@ -2,7 +2,7 @@
 
 A beautiful, modern weather application built with Next.js 15, TypeScript, and Tailwind CSS. Features real-time weather data, 3D animations, drag-and-drop city management, and a stunning Silk shader background.
 
-## ✨ Features
+## Features
 
 - **Real-time Weather Data** - Powered by WeatherAPI.com
 - **Modern UI/UX** - Glass morphism design with animated backgrounds
@@ -14,7 +14,7 @@ A beautiful, modern weather application built with Next.js 15, TypeScript, and T
 - **Fast Performance** - Built with Next.js 15 and optimized for speed
 - **Weather Animations** - Dynamic backgrounds based on weather conditions
 
-## 🚀 Quick Start
+## Quick Start
 
 ```bash
 git clone https://github.com/ronilborah/Weather-App.git
