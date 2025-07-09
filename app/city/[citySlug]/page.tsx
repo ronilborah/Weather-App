@@ -2,7 +2,7 @@
 
 import React from "react"
 import Link from "next/link"
-import { useState, useEffect } from "react"
+import { useState, useEffect, useRef } from "react"
 import {
   ArrowLeft,
   Droplets,
@@ -24,26 +24,79 @@ import type { WeatherData } from "@/lib/weather-api"
 import { getWeatherCondition } from "@/lib/weather-api"
 import * as RechartsPrimitive from "recharts"
 import { ChartContainer, ChartTooltipContent } from "@/components/ui/chart"
+import { gsap } from "gsap"
+import Aurora from "@/components/Aurora"
 
 const StatCard = ({
   icon: Icon,
   label,
   value,
   unit = "",
-}: { icon: any; label: string; value: string | number; unit?: string }) => (
-  <div className="bg-white/5 backdrop-blur-xl border border-white/20 rounded-2xl p-4 shadow-lg transition-all duration-300 hover:bg-white/10 hover:scale-105 hover:shadow-2xl">
-    <div className="flex items-center gap-3">
-      <Icon size={20} className="text-blue-400" />
-      <div>
-        <p className="text-gray-300 text-sm">{label}</p>
-        <p className="text-white font-semibold">
-          {value}
-          {unit}
-        </p>
+}: { icon: any; label: string; value: string | number; unit?: string }) => {
+  const cardRef = useRef<HTMLDivElement>(null);
+  const setX = useRef<any>(null);
+  const setY = useRef<any>(null);
+
+  // Setup GSAP setters on mount
+  React.useEffect(() => {
+    if (!cardRef.current) return;
+    setX.current = gsap.quickSetter(cardRef.current, "--mouse-x", "px");
+    setY.current = gsap.quickSetter(cardRef.current, "--mouse-y", "px");
+  }, []);
+
+  // Mouse move handler
+  const handleMouseMove = (e: React.MouseEvent<HTMLDivElement>) => {
+    const card = cardRef.current;
+    if (!card) return;
+    const rect = card.getBoundingClientRect();
+    const x = e.clientX - rect.left;
+    const y = e.clientY - rect.top;
+    setX.current?.(x);
+    setY.current?.(y);
+  };
+
+  // Mouse leave handler (center the spotlight)
+  const handleMouseLeave = () => {
+    const card = cardRef.current;
+    if (!card) return;
+    const rect = card.getBoundingClientRect();
+    setX.current?.(rect.width / 2);
+    setY.current?.(rect.height / 2);
+  };
+
+  return (
+    <div
+      ref={cardRef}
+      className="bg-white/5 backdrop-blur-xl border border-white/20 rounded-2xl p-4 shadow-lg transition-all duration-300 hover:bg-white/10 hover:scale-105 hover:shadow-2xl relative overflow-hidden group"
+      style={{
+        // Use percentage for initial state
+        "--mouse-x": "50%",
+        "--mouse-y": "50%",
+      } as React.CSSProperties}
+      onMouseMove={handleMouseMove}
+      onMouseLeave={handleMouseLeave}
+    >
+      <div className="flex items-center gap-3 relative z-10">
+        <Icon size={20} className="text-blue-400" />
+        <div>
+          <p className="text-gray-300 text-sm">{label}</p>
+          <p className="text-white font-semibold">
+            {value}
+            {unit}
+          </p>
+        </div>
       </div>
+      {/* Spotlight effect - more visible color */}
+      <div
+        className="pointer-events-none absolute inset-0 z-0 transition-opacity duration-300 group-hover:opacity-100 opacity-80"
+        style={{
+          background:
+            "radial-gradient(220px circle at var(--mouse-x, 50%) var(--mouse-y, 50%), rgba(59,130,246,0.18), rgba(255,255,255,0.10) 60%, transparent 100%)",
+        }}
+      />
     </div>
-  </div>
-)
+  );
+};
 
 const ForecastCard = ({ forecast }: { forecast: any }) => (
   <div className="bg-white/5 backdrop-blur-xl border border-white/20 rounded-2xl p-4 min-w-[140px] shadow-lg transition-all duration-300 hover:bg-white/10 hover:scale-105 hover:shadow-2xl">
@@ -139,7 +192,16 @@ export default function CityPage({ params }: { params: Promise<{ citySlug: strin
 
   return (
     <div className="min-h-screen relative overflow-hidden">
-      <WeatherBackground weather={getWeatherCondition(currentWeather.condition.code)} />
+      {/* Aurora animated background */}
+      <div className="fixed inset-0 z-0 pointer-events-none">
+        <Aurora
+          colorStops={["#1e293b", "#2563eb", "#3b82f6"]}
+          blend={0.5}
+          amplitude={1.0}
+          speed={0.5}
+        />
+      </div>
+      {/* Removed WeatherBackground */}
 
       {/* Content */}
       <div className="relative z-10 min-h-screen bg-black/20 backdrop-blur-sm">
