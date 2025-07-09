@@ -21,6 +21,8 @@ import { WeatherIcon } from "@/components/weather-icon"
 import { WeatherBackground } from "./weather-background"
 import type { WeatherData } from "@/lib/weather-api"
 import { getWeatherCondition } from "@/lib/weather-api"
+import * as RechartsPrimitive from "recharts"
+import { ChartContainer, ChartTooltipContent } from "@/components/ui/chart"
 
 const StatCard = ({
   icon: Icon,
@@ -28,7 +30,7 @@ const StatCard = ({
   value,
   unit = "",
 }: { icon: any; label: string; value: string | number; unit?: string }) => (
-  <div className="bg-white/5 backdrop-blur-md border border-white/10 rounded-xl p-4 hover:bg-white/10 transition-all duration-300">
+  <div className="bg-white/5 backdrop-blur-xl border border-white/20 rounded-2xl p-4 shadow-lg transition-all duration-300 hover:bg-white/10 hover:scale-105 hover:shadow-2xl">
     <div className="flex items-center gap-3">
       <Icon size={20} className="text-blue-400" />
       <div>
@@ -43,7 +45,7 @@ const StatCard = ({
 )
 
 const ForecastCard = ({ forecast }: { forecast: any }) => (
-  <div className="bg-white/5 backdrop-blur-md border border-white/10 rounded-xl p-4 min-w-[140px] hover:bg-white/10 transition-all duration-300">
+  <div className="bg-white/5 backdrop-blur-xl border border-white/20 rounded-2xl p-4 min-w-[140px] shadow-lg transition-all duration-300 hover:bg-white/10 hover:scale-105 hover:shadow-2xl">
     <div className="text-center">
       <p className="text-gray-300 text-sm mb-2">
         {new Date(forecast.date).toLocaleDateString("en-US", { weekday: "short" })}
@@ -61,7 +63,7 @@ const ForecastCard = ({ forecast }: { forecast: any }) => (
 )
 
 const HourlyCard = ({ hour }: { hour: any }) => (
-  <div className="bg-white/5 backdrop-blur-md border border-white/10 rounded-xl p-3 min-w-[100px] hover:bg-white/10 transition-all duration-300">
+  <div className="bg-white/5 backdrop-blur-xl border border-white/20 rounded-2xl p-3 min-w-[100px] shadow-lg transition-all duration-300 hover:bg-white/10 hover:scale-105 hover:shadow-2xl">
     <div className="text-center">
       <p className="text-gray-300 text-xs mb-2">
         {new Date(hour.time).toLocaleTimeString("en-US", { hour: "numeric" })}
@@ -192,12 +194,37 @@ export default function CityPage({ params }: { params: Promise<{ citySlug: strin
           {/* Hourly Forecast */}
           <div className="mb-12">
             <h2 className="text-2xl font-bold text-white mb-6">24-Hour Forecast</h2>
-            <div className="flex gap-4 overflow-x-auto pb-4">
-              {todayForecast.hour
-                .filter((_, index) => index % 3 === 0)
-                .map((hour: any, index: number) => (
-                  <HourlyCard key={index} hour={hour} />
-                ))}
+            <div className="w-full max-w-3xl mx-auto">
+              <ChartContainer
+                config={{ temp: { label: 'Temperature', color: '#60a5fa' } }}
+                style={{ width: '100%', height: 300 }}
+              >
+                <RechartsPrimitive.LineChart data={todayForecast.hour} margin={{ top: 20, right: 30, left: 0, bottom: 0 }}>
+                  <RechartsPrimitive.XAxis
+                    dataKey="time"
+                    tickFormatter={t => new Date(t).toLocaleTimeString('en-US', { hour: 'numeric' })}
+                    stroke="#cbd5e1"
+                  />
+                  <RechartsPrimitive.YAxis
+                    dataKey="temp_c"
+                    domain={['auto', 'auto']}
+                    stroke="#cbd5e1"
+                    tickFormatter={v => `${Math.round(v)}°`}
+                  />
+                  <RechartsPrimitive.Tooltip
+                    content={<ChartTooltipContent labelKey="time" nameKey="temp_c" />}
+                    formatter={v => `${Math.round(Number(v))}°C`}
+                  />
+                  <RechartsPrimitive.Line
+                    type="monotone"
+                    dataKey="temp_c"
+                    stroke="#60a5fa"
+                    strokeWidth={3}
+                    dot={{ r: 4, stroke: '#60a5fa', strokeWidth: 2, fill: '#1e293b' }}
+                    activeDot={{ r: 6 }}
+                  />
+                </RechartsPrimitive.LineChart>
+              </ChartContainer>
             </div>
           </div>
 
