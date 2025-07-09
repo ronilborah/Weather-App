@@ -296,7 +296,12 @@ export default function AddCityPage() {
   }
 
   const handleSelectCity = async (result: SearchResult) => {
-    await loadCityPreview(result.name)
+    // Use the full location data for more accurate weather lookup
+    const locationQuery = result.region && result.region !== result.name
+      ? `${result.name}, ${result.region}, ${result.country}`
+      : `${result.name}, ${result.country}`
+
+    await loadCityPreview(locationQuery)
   }
 
   const handleRecentSearchSelect = async (citySlug: string) => {
