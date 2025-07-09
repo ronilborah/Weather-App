@@ -4,6 +4,7 @@ import { Plus, Trash2 } from "lucide-react"
 import { useCities } from "@/components/city-context"
 import { DraggableCityCard } from "@/components/draggable-city-card"
 import Silk from "@/components/silk"
+import TextPressure from "@/components/TextPressure"
 import {
   DndContext,
   closestCenter,
@@ -84,6 +85,35 @@ export default function Home() {
 
       {/* Gradient overlay for better contrast */}
       <div className="fixed inset-0 z-10 bg-gradient-to-br from-gray-900/60 via-blue-900/40 to-gray-900/60"></div>
+
+      {/* Centered WeatherVerse heading */}
+      <header className="relative z-20 w-full flex justify-center pt-12 pb-4">
+        <div
+          style={{
+            position: 'relative',
+            height: '80px', // slightly reduced for better fit
+            width: '100%',
+            maxWidth: '700px', // constrain max width
+            margin: '0 auto', // center
+            display: 'flex',
+            justifyContent: 'center',
+            alignItems: 'center',
+          }}
+        >
+          <TextPressure
+            text="WeatherVerse"
+            flex={true}
+            alpha={false}
+            stroke={false}
+            width={true}
+            weight={true}
+            italic={true}
+            textColor="#60a5fa" // light blue
+            strokeColor="#ff0000"
+            minFontSize={32} // slightly smaller minimum
+          />
+        </div>
+      </header>
 
       {/* Add floating action buttons */}
       <div className="fixed top-6 right-6 z-30 flex items-center gap-3">

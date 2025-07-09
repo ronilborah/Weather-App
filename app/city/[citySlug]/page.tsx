@@ -281,12 +281,14 @@ export default function CityPage({ params }: { params: Promise<{ citySlug: strin
                   <RechartsPrimitive.XAxis
                     dataKey="time"
                     tickFormatter={t => new Date(t).toLocaleTimeString('en-US', { hour: 'numeric' })}
-                    stroke="#cbd5e1"
+                    stroke="#fff"
+                    tick={{ fill: '#fff' }}
                   />
                   <RechartsPrimitive.YAxis
                     dataKey="temp_c"
                     domain={['auto', 'auto']}
-                    stroke="#cbd5e1"
+                    stroke="#fff"
+                    tick={{ fill: '#fff' }}
                     tickFormatter={v => `${Math.round(v)}°`}
                   />
                   <RechartsPrimitive.Tooltip
