@@ -29,14 +29,16 @@ git clone https://github.com/ronilborah/Weather-App.git
 cd Weather-App
 npm install
 
-# Get API key from https://www.weatherapi.com/ and create .env.local
-echo "NEXT_PUBLIC_WEATHER_API_KEY=your_api_key_here" > .env.local
+# Run setup script (creates .env.local automatically)
+npm run setup
 
 # Start the development server
 npm run dev
 ```
 
 Then open [http://localhost:3000](http://localhost:3000) in your browser.
+
+**Note:** The setup script will create a `.env.local` file with instructions. Just replace `your_api_key_here` with your actual API key from [WeatherAPI.com](https://www.weatherapi.com/).
 
 ## 🛠️ Available Scripts
 
