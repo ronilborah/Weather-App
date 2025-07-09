@@ -24,15 +24,10 @@ A beautiful, modern weather application built with Next.js 15, TypeScript, and T
 ### Run the App
 
 ```bash
-# Clone and setup
 git clone https://github.com/ronilborah/Weather-App.git
 cd Weather-App
 npm install
-
-# Run setup script (creates .env.local automatically)
 npm run setup
-
-# Start the development server
 npm run dev
 ```
 
