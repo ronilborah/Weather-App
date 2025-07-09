@@ -30,48 +30,7 @@ const CityContext = createContext<CityContextType | undefined>(undefined)
 const STORAGE_KEY = "weatherverse_pinned_cities"
 const STORAGE_VERSION = "1.0"
 
-const defaultCities: City[] = [
-  {
-    id: "new-york",
-    name: "New York",
-    weather: "sunny",
-    minTemp: 18,
-    maxTemp: 25,
-    current: 22,
-    country: "USA",
-    addedAt: Date.now() - 86400000, // 1 day ago
-  },
-  {
-    id: "london",
-    name: "London",
-    weather: "cloudy",
-    minTemp: 12,
-    maxTemp: 18,
-    current: 15,
-    country: "UK",
-    addedAt: Date.now() - 172800000, // 2 days ago
-  },
-  {
-    id: "tokyo",
-    name: "Tokyo",
-    weather: "rainy",
-    minTemp: 20,
-    maxTemp: 28,
-    current: 24,
-    country: "Japan",
-    addedAt: Date.now() - 259200000, // 3 days ago
-  },
-  {
-    id: "sydney",
-    name: "Sydney",
-    weather: "sunny",
-    minTemp: 16,
-    maxTemp: 24,
-    current: 20,
-    country: "Australia",
-    addedAt: Date.now() - 345600000, // 4 days ago
-  },
-]
+// No default cities. Start empty if nothing in storage.
 
 // Generate consistent ID from city name
 const generateCityId = (citySlug: string): string => {
@@ -102,8 +61,8 @@ const loadCitiesFromStorage = (): City[] => {
   try {
     const saved = localStorage.getItem(STORAGE_KEY)
     if (!saved) {
-      console.log("No saved cities found, using defaults")
-      return defaultCities
+      console.log("No saved cities found, starting empty")
+      return []
     }
 
     const parsedData = JSON.parse(saved)
@@ -132,11 +91,11 @@ const loadCitiesFromStorage = (): City[] => {
       return cities
     }
 
-    console.log("Invalid storage format, using defaults")
-    return defaultCities
+    console.log("Invalid storage format, starting empty")
+    return []
   } catch (error) {
     console.error("Failed to load cities from localStorage:", error)
-    return defaultCities
+    return []
   }
 }
 
