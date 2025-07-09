@@ -19,49 +19,24 @@ A beautiful, modern weather application built with Next.js 15, TypeScript, and T
 
 ### Prerequisites
 - Node.js 18+ 
-- npm, yarn, or pnpm
 - WeatherAPI.com API key (free)
 
-### Installation & Setup
+### Run the App
 
-1. **Clone the repository**
-   ```bash
-   git clone https://github.com/ronilborah/Weather-App.git
-   cd Weather-App
-   ```
+```bash
+# Clone and setup
+git clone https://github.com/ronilborah/Weather-App.git
+cd Weather-App
+npm install
 
-2. **Install dependencies**
-   ```bash
-   npm install
-   # or
-   yarn install
-   # or
-   pnpm install
-   ```
+# Get API key from https://www.weatherapi.com/ and create .env.local
+echo "NEXT_PUBLIC_WEATHER_API_KEY=your_api_key_here" > .env.local
 
-3. **Set up environment variables**
-   ```bash
-   # Create .env.local file
-   echo "NEXT_PUBLIC_WEATHER_API_KEY=your_api_key_here" > .env.local
-   ```
+# Start the development server
+npm run dev
+```
 
-4. **Get your WeatherAPI.com API key**
-   - Visit [WeatherAPI.com](https://www.weatherapi.com/)
-   - Sign up for a free account
-   - Get your API key from the dashboard
-   - Replace `your_api_key_here` in `.env.local` with your actual API key
-
-5. **Run the development server**
-   ```bash
-   npm run dev
-   # or
-   yarn dev
-   # or
-   pnpm dev
-   ```
-
-6. **Open your browser**
-   Navigate to [http://localhost:3000](http://localhost:3000)
+Then open [http://localhost:3000](http://localhost:3000) in your browser.
 
 ## 🛠️ Available Scripts
 
