@@ -74,54 +74,59 @@ const CityCard = ({ city }: { city: CityPreview }) => {
     }
   }
 
+  // Create URL-safe city name
+  const citySlug = encodeURIComponent(city.name.toLowerCase().replace(/\s+/g, "-"))
+
   return (
-    <div className="bg-white/5 backdrop-blur-md border border-white/10 rounded-2xl p-6 hover:bg-white/10 transition-all duration-300 hover:scale-105 hover:shadow-2xl">
-      <div className="flex items-center justify-between mb-4">
-        <div>
-          <h3 className="text-lg font-bold text-white">{city.name}</h3>
-          <p className="text-sm text-gray-300">
-            {city.region && `${city.region}, `}
-            {city.country}
-          </p>
-        </div>
-        <WeatherIcon weather={city.weather} />
-      </div>
-
-      <div className="flex items-center justify-between">
-        <div>
-          <div className="text-xl font-bold text-white">{city.current}°C</div>
-          <div className="text-sm text-gray-300">{city.condition}</div>
+    <Link href={`/city/${citySlug}`} className="block group focus:outline-none focus:ring-2 focus:ring-blue-400 rounded-2xl">
+      <div className="bg-white/5 backdrop-blur-md border border-white/10 rounded-2xl p-6 hover:bg-white/10 transition-all duration-300 hover:scale-105 hover:shadow-2xl">
+        <div className="flex items-center justify-between mb-4">
+          <div>
+            <h3 className="text-lg font-bold text-white group-hover:text-blue-400 transition-colors">{city.name}</h3>
+            <p className="text-sm text-gray-300">
+              {city.region && `${city.region}, `}
+              {city.country}
+            </p>
+          </div>
+          <WeatherIcon weather={city.weather} />
         </div>
 
-        <button
-          onClick={handleAdd}
-          disabled={isAlreadyAdded || isAdding}
-          className={`px-4 py-2 rounded-xl flex items-center gap-2 transition-all duration-200 font-medium ${isAlreadyAdded
+        <div className="flex items-center justify-between">
+          <div>
+            <div className="text-xl font-bold text-white">{city.current}°C</div>
+            <div className="text-sm text-gray-300">{city.condition}</div>
+          </div>
+
+          <button
+            onClick={e => { e.preventDefault(); handleAdd(); }}
+            disabled={isAlreadyAdded || isAdding}
+            className={`px-4 py-2 rounded-xl flex items-center gap-2 transition-all duration-200 font-medium ${isAlreadyAdded
               ? "bg-transparent text-green-400 cursor-not-allowed backdrop-blur-sm border border-green-400/30"
               : isAdding
                 ? "bg-transparent text-blue-400 cursor-not-allowed backdrop-blur-sm border border-blue-400/30"
                 : "bg-transparent hover:bg-white/10 text-blue-400 hover:text-blue-300 backdrop-blur-sm border border-blue-400/30 hover:border-blue-300/50"
-            }`}
-        >
-          {isAlreadyAdded ? (
-            <>
-              <Check size={16} />
-              Added
-            </>
-          ) : isAdding ? (
-            <>
-              <div className="w-4 h-4 border-2 border-blue-400 border-t-transparent rounded-full animate-spin"></div>
-              Adding...
-            </>
-          ) : (
-            <>
-              <Plus size={16} />
-              Add
-            </>
-          )}
-        </button>
+              }`}
+          >
+            {isAlreadyAdded ? (
+              <>
+                <Check size={16} />
+                Added
+              </>
+            ) : isAdding ? (
+              <>
+                <div className="w-4 h-4 border-2 border-blue-400 border-t-transparent rounded-full animate-spin"></div>
+                Adding...
+              </>
+            ) : (
+              <>
+                <Plus size={16} />
+                Add
+              </>
+            )}
+          </button>
+        </div>
       </div>
-    </div>
+    </Link>
   )
 }
 
