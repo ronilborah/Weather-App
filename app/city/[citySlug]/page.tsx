@@ -16,6 +16,7 @@ import {
   Snowflake,
   Sun,
   Moon,
+  Cloud,
 } from "lucide-react"
 import { WeatherIcon } from "@/components/weather-icon"
 import { WeatherBackground } from "./weather-background"
@@ -181,6 +182,21 @@ export default function CityPage({ params }: { params: Promise<{ citySlug: strin
             <StatCard icon={Eye} label="Visibility" value={Math.round(currentWeather.vis_km)} unit=" km" />
             <StatCard icon={Sun} label="UV Index" value={currentWeather.uv} />
             <StatCard icon={Thermometer} label="Feels Like" value={Math.round(currentWeather.feelslike_c)} unit="°C" />
+          </div>
+
+          {/* More Weather Metrics */}
+          <div className="grid grid-cols-2 md:grid-cols-4 lg:grid-cols-6 gap-4 mb-12">
+            <StatCard icon={Thermometer} label="Temperature (°F)" value={Math.round(currentWeather.temp_f)} unit="°F" />
+            <StatCard icon={Wind} label="Wind Speed (mph)" value={Math.round(currentWeather.wind_mph)} unit=" mph" />
+            <StatCard icon={Wind} label="Wind Direction (°)" value={currentWeather.wind_degree} unit="°" />
+            <StatCard icon={Gauge} label="Pressure (in)" value={currentWeather.pressure_in} unit=" in" />
+            <StatCard icon={CloudRain} label="Precipitation (mm)" value={currentWeather.precip_mm} unit=" mm" />
+            <StatCard icon={CloudRain} label="Precipitation (in)" value={currentWeather.precip_in} unit=" in" />
+            <StatCard icon={Cloud} label="Cloud Cover" value={currentWeather.cloud} unit="%" />
+            <StatCard icon={Thermometer} label="Feels Like (°F)" value={Math.round(currentWeather.feelslike_f)} unit="°F" />
+            <StatCard icon={Eye} label="Visibility (miles)" value={Math.round(currentWeather.vis_miles)} unit=" mi" />
+            <StatCard icon={Wind} label="Gust (mph)" value={Math.round(currentWeather.gust_mph)} unit=" mph" />
+            <StatCard icon={Wind} label="Gust (kph)" value={Math.round(currentWeather.gust_kph)} unit=" km/h" />
           </div>
 
           {/* Additional Weather Details */}
