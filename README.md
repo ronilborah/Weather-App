@@ -33,7 +33,7 @@ npm run dev
 
 Then open [http://localhost:3000](http://localhost:3000) in your browser.
 
-**Note:** The setup script will create a `.env.local` file with instructions. Just replace `your_api_key_here` with your actual API key from [WeatherAPI.com](https://www.weatherapi.com/).
+**Note:** The setup script will automatically prompt you for your WeatherAPI.com API key and create the `.env.local` file for you.
 
 ## 🛠️ Available Scripts
 
